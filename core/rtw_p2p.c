@@ -1751,7 +1751,7 @@ static void reset_ch_sitesurvey_timer_process (void *FunctionContext)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, pwrctrlpriv.pwr_state_check_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, pwrctrlpriv.pwr_state_check_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif
@@ -1773,7 +1773,7 @@ static void reset_ch_sitesurvey_timer_process2 (void *FunctionContext)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, pwrctrlpriv.pwr_state_check_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, pwrctrlpriv.pwr_state_check_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif
@@ -1795,7 +1795,7 @@ static void restore_p2p_state_timer_process (void *FunctionContext)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, wdinfo.restore_p2p_state_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, wdinfo.restore_p2p_state_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif
@@ -1814,7 +1814,7 @@ static void pre_tx_scan_timer_process(void *FunctionContext)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, wdinfo.pre_tx_scan_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, wdinfo.pre_tx_scan_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif
@@ -1852,7 +1852,7 @@ static void find_phase_timer_process(void *FunctionContext)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, wdinfo.find_phase_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, wdinfo.find_phase_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif

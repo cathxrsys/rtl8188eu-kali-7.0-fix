@@ -2197,7 +2197,7 @@ void rtw_signal_stat_timer_hdl(RTW_TIMER_HDL_ARGS)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct adapter *adapter = from_timer(adapter, t, recvpriv.signal_stat_timer);
+	struct adapter *adapter = timer_container_of(adapter, t, recvpriv.signal_stat_timer);
 #else
 	struct adapter *adapter = (struct adapter *)FunctionContext;
 #endif

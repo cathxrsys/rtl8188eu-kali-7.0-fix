@@ -21,6 +21,7 @@
 #define __OSDEP_SERVICE_H_
 
 #include <linux/version.h>
+#include <linux/timer.h>
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 11, 0)
 #include <linux/sched/signal.h>
 #endif
@@ -112,7 +113,7 @@ static inline void _set_timer(struct timer_list *ptimer,u32 delay_time)
 
 static inline void _cancel_timer(struct timer_list *ptimer,u8 *bcancelled)
 {
-	del_timer_sync(ptimer);
+	timer_delete_sync(ptimer);
 	*bcancelled=  true;/* true ==1; false==0 */
 }
 
@@ -286,7 +287,7 @@ void rtw_yield_os(void);
 
 static inline unsigned char _cancel_timer_ex(struct timer_list *ptimer)
 {
-	return del_timer_sync(ptimer);
+	return timer_delete_sync(ptimer);
 }
 
 static __inline void thread_enter(char *name)

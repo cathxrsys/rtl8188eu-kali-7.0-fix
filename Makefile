@@ -11,7 +11,7 @@ EXTRA_CFLAGS += -Wno-unused
 
 EXTRA_CFLAGS += -Wno-uninitialized
 
-EXTRA_CFLAGS += -I$(src)/include
+ccflags-y += -I$(src)/include
 
 ccflags-y += -D__CHECK_ENDIAN__
 

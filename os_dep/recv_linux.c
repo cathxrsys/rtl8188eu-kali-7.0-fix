@@ -253,7 +253,7 @@ static void _rtw_reordering_ctrl_timeout_handler(struct timer_list *t)
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0)
 	preorder_ctrl = (struct recv_reorder_ctrl *)func_context;
 #else
-	preorder_ctrl = from_timer(preorder_ctrl, t, reordering_ctrl_timer);
+	preorder_ctrl = timer_container_of(preorder_ctrl, t, reordering_ctrl_timer);
 #endif
 	rtw_reordering_ctrl_timeout_handler(preorder_ctrl);
 }

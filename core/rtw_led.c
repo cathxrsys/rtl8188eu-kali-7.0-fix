@@ -1,3 +1,4 @@
+#include <linux/timer.h>
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
@@ -19,6 +20,7 @@
  ******************************************************************************/
 
 #include <drv_types.h>
+#include <linux/timer.h>
 #include "rtw_led.h"
 
 /*  */
@@ -33,7 +35,7 @@ void BlinkTimerCallback(void *data)
 #endif
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
-	struct LED_871x *pLed = from_timer(pLed, t, BlinkTimer);
+	struct LED_871x *pLed = timer_container_of(pLed, t, BlinkTimer);
 #else
 	struct LED_871x *pLed = (struct LED_871x *)data;
 #endif

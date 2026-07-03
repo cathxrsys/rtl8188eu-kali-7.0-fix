@@ -216,7 +216,7 @@ static void pwr_state_check_handler(void *FunctionContext)
 {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
 	struct adapter *padapter =
-		from_timer(padapter, t,
+		timer_container_of(padapter, t,
 			   pwrctrlpriv.pwr_state_check_timer);
 #else
 	struct adapter *padapter = (struct adapter *)FunctionContext;
