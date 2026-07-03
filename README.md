@@ -1,23 +1,29 @@
-IMPORTANT - PLEASE READ:
+# rtl8188eu driver — fixed for kernel 6.15+ / Kali 7.0.12
 
-Beginning on November 4, 2019, I will NO LONGER support people that have downloaded the source
-as a zip file. Using git has much more flexibility. In addition, there is much less likelihood
-that a user will contact me with a problem that is ALREADY fixed.
+Fork of aircrack-ng/lwfinger rtl8188eu, patched for kernels where legacy timer API was removed.
 
-If your system says that /lib/modules/...../build does not exist, you have not
-installed the kernel headers, you have done it incorrectly, or you are not running
-the kernel for which the headers have been installed. The necessary steps are
-dependent on which distro you are using. Creating a new issue and asking at
-GitHub will not be productive.
+## Changes
+- Makefile: `EXTRA_CFLAGS += -I$(src)/include` → `ccflags-y += -I$(src)/include` (EXTRA_CFLAGS deprecated/removed in kbuild)
+- include/osdep_service.h: `del_timer_sync()` → `timer_delete_sync()` (renamed in kernel 6.15)
+- core/rtw_led.c: `from_timer()` → `timer_container_of()` (renamed in kernel 6.16)
 
-Your kernel configuration MUST have CONFIG_WIRELESS_EXT set.
+## Install
+\`\`\`bash
+git clone https://github.com/<username>/rtl8188eu-kali-7.0-fix.git
+cd rtl8188eu-kali-7.0-fix
+sudo dkms add .
+sudo dkms build -m rtl8188eu -v 4.1.4
+sudo dkms install -m rtl8188eu -v 4.1.4
+sudo modprobe -r rtl8xxxu
+sudo modprobe 8188eu
+\`\`\`
 
-Unsolicited E-mail sent to my private address will be ignored!!
-
-If a build fails that previously worked, perform a 'git pull' and retry before
-reporting a problem. As noted, if you had downloaded the source in zip form, then you would
-need to get an entirely new source file. That is why using git, which downloads only the changed
-lines, is required.
+**Важно:** заблокируй встроенный rtl8xxxu, иначе он перехватит устройство:
+\`\`\`bash
+echo "blacklist rtl8xxxu" | sudo tee -a /etc/modprobe.d/blacklist-rtl.conf
+echo "install rtl8xxxu /bin/false" | sudo tee -a /etc/modprobe.d/blacklist-rtl.conf
+sudo update-initramfs -u
+\`\`\`
 
 rtl8188eu
 =========
